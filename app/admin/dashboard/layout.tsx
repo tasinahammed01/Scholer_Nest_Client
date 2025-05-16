@@ -1,42 +1,60 @@
+"use client";
+
+import { BookMarked, CircleUserRound, Menu } from "lucide-react";
 import Link from "next/link";
-import { ReactNode } from "react";
-import { ClerkLoaded, ClerkLoading, UserButton } from "@clerk/nextjs";
-import { Loader2 } from "lucide-react";
+import { ReactNode, useState } from "react";
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
-    return (
-        <div className="flex min-h-screen bg-[#393E46] text-gray-900">
-            {/* Sidebar */}
-            <aside className="w-64 bg-white border-r p-6">
-                <div className="text-2xl font-bold mb-8">Admin Panel</div>
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-                <nav className="flex flex-col gap-4">
-                    <Link
-                        href="/admin/users"
-                        className="text-blue-600 hover:underline font-medium"
-                    >
-                        👥 Users
-                    </Link>
-                    <Link
-                        href="/admin/courses"
-                        className="text-blue-600 hover:underline font-medium"
-                    >
-                        📚 Courses
-                    </Link>
-                </nav>
+  return (
+    <div className="flex min-h-screen bg-[#222831]">
+      {/* Mobile Sidebar Overlay */}
+      <div
+        className={`fixed inset-0 bg-black bg-opacity-50 z-30 transition-opacity lg:hidden ${sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+        onClick={() => setSidebarOpen(false)}
+      ></div>
 
-                <div className="mt-auto pt-10">
-                    <ClerkLoading>
-                        <Loader2 className="animate-spin text-gray-500" />
-                    </ClerkLoading>
-                    <ClerkLoaded>
-                        <UserButton afterSignOutUrl="/" />
-                    </ClerkLoaded>
-                </div>
-            </aside>
+      {/* Sidebar */}
+      <aside
+        className={`fixed lg:static z-40 top-0 left-0 min-h-screen w-[280px] sm:w-64 bg-[#222831] border-r p-4 sm:p-6 transform transition-transform duration-300 ease-in-out ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } lg:translate-x-0`}
+      >
+        <div className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 text-white">Admin Panel</div>
 
-            {/* Main Content */}
-            <main className="flex-1 p-8 overflow-auto">{children}</main>
+        <nav className="flex flex-col gap-3 sm:gap-5 text-white">
+          <Link
+            href="/admin/dashboard/users"
+            className="font-medium flex gap-2 sm:gap-3 items-center hover:bg-gray-600 py-2 sm:py-3 px-2 rounded text-sm sm:text-base"
+          >
+            <CircleUserRound className="w-5 h-5 sm:w-6 sm:h-6" /> <span>Users</span>
+          </Link>
+          <Link
+            href="/admin/dashboard/courses"
+            className="font-medium flex gap-2 sm:gap-3 items-center hover:bg-gray-600 py-2 sm:py-3 px-2 rounded text-sm sm:text-base"
+          >
+            <BookMarked className="w-5 h-5 sm:w-6 sm:h-6" /> <span>Courses</span>
+          </Link>
+        </nav>
+      </aside>
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col">
+        {/* Top Bar for Mobile */}
+        <div className="lg:hidden bg-[#222831] text-white p-3 sm:p-4 flex items-center justify-between border-b">
+          <button 
+            onClick={() => setSidebarOpen(true)}
+            className="p-2 hover:bg-gray-600 rounded-lg transition-colors"
+          >
+            <Menu className="w-6 h-6" />
+          </button>
+          <div className="text-base sm:text-lg font-semibold">Admin Panel</div>
         </div>
-    );
+
+        <main className="flex-1 p-4 sm:p-6 overflow-auto text-white">{children}</main>
+      </div>
+    </div>
+  );
 }

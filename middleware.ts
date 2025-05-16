@@ -26,21 +26,21 @@ export default clerkMiddleware(async (auth, req) => {
   if (userId) {
     // Admin routes protection
     if (isAdminRoute(req) && role !== "admin") {
-      return NextResponse.redirect(new URL("/", req.url));
+      return NextResponse.redirect(new URL("/admin", req.url));
     }
 
     // Teacher routes protection
     if (isTeacherRoute(req) && role !== "teacher") {
-      return NextResponse.redirect(new URL("/", req.url));
+      return NextResponse.redirect(new URL("/teacher", req.url));
     }
 
     // Student routes protection
     if (isStudentRoute(req) && role !== "student") {
-      return NextResponse.redirect(new URL("/", req.url));
+      return NextResponse.redirect(new URL("/student", req.url));
     }
 
-    // Redirect to appropriate dashboard if on root path
-    if (req.nextUrl.pathname === "/") {
+    // Only redirect to dashboard if explicitly on the root URL
+    if (req.nextUrl.pathname === "/dashboard" && !req.nextUrl.search) {
       const dashboardMap: Record<Role, string> = {
         admin: "/admin/dashboard",
         teacher: "/teacher/dashboard",

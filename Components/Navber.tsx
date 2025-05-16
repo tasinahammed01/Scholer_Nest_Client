@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   SignInButton,
   SignUpButton,
@@ -15,22 +15,34 @@ import { useRouter } from "next/navigation";
 
 export default function Navber() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { user } = useUser();
+  const [mounted, setMounted] = useState(false);
+  const { user, isLoaded } = useUser();
   const router = useRouter();
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const handleDashboardClick = () => {
+    if (!mounted || !isLoaded) return;
+    
     const role = user?.publicMetadata?.role;
+    if (!role) return;
 
-    console.log(role)
+    const dashboardMap = {
+      admin: "/admin/dashboard",
+      teacher: "/teacher/dashboard",
+      student: "/student/dashboard"
+    };
 
-    if (role === "admin") {
-      router.push("/admin/dashboard");
-    } else if (role === "teacher") {
-      router.push("/teacher/dashboard");
-    } else {
-      router.push("/student/dashboard");
-    }
+    const path = dashboardMap[role as keyof typeof dashboardMap] || "/";
+    router.push(path);
   };
+
+  // Don't render anything until mounted to prevent hydration mismatch
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <div className="flex justify-between items-center md:px-10 py-10 relative">
@@ -88,12 +100,15 @@ export default function Navber() {
       </div>
 
       {/* Toggle Button & UserButton for Mobile/Tablet */}
-      <div className="lg:hidden z-50 flex items-center gap-4">
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
+      <div className="lg:hidden  flex items-center gap-4">
+        <div className="z-30">
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+        </div>
 
-        <button onClick={() => setMenuOpen(!menuOpen)}>
+
+        <button className="z-50" onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <X size={30} /> : <Menu size={30} />}
         </button>
       </div>
