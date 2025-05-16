@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function HomePage() {
+export default function Ai_Chat() {
   return (
     <div>
-      This is home page
+      this is ai chat page
     </div>
   )
 }

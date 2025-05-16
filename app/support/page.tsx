@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function HomePage() {
+export default function Support() {
   return (
     <div>
-      This is home page
+      this is support page
     </div>
   )
 }
