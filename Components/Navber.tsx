@@ -6,13 +6,31 @@ import {
   SignedIn,
   SignedOut,
   UserButton,
+  useUser,
 } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
-import { Menu, X } from "lucide-react"; // You can also use any icon library
+import { Menu, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Navber() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { user } = useUser();
+  const router = useRouter();
+
+  const handleDashboardClick = () => {
+    const role = user?.publicMetadata?.role;
+
+    console.log(role)
+
+    if (role === "admin") {
+      router.push("/admin/dashboard");
+    } else if (role === "teacher") {
+      router.push("/teacher/dashboard");
+    } else {
+      router.push("/student/dashboard");
+    }
+  };
 
   return (
     <div className="flex justify-between items-center md:px-10 py-10 relative">
@@ -29,6 +47,9 @@ export default function Navber() {
       {/* Desktop Nav */}
       <div className="w-[70%] hidden lg:block">
         <ul className="flex justify-center items-center gap-10">
+          <li className="relative after:bg-white after:absolute after:h-1 after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300 cursor-pointer">
+            <Link href="/">Home</Link>
+          </li>
           <li className="relative after:bg-white after:absolute after:h-1 after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300 cursor-pointer">
             <Link href="/courses">Courses</Link>
           </li>
@@ -56,18 +77,22 @@ export default function Navber() {
         </SignedOut>
 
         <SignedIn>
+          <button
+            onClick={handleDashboardClick}
+            className="text-white border px-3 py-1 rounded hover:bg-white hover:text-black transition"
+          >
+            Dashboard
+          </button>
           <UserButton />
         </SignedIn>
       </div>
 
       {/* Toggle Button & UserButton for Mobile/Tablet */}
       <div className="lg:hidden z-50 flex items-center gap-4">
-        {/* UserButton always visible on mobile/tablet */}
         <SignedIn>
           <UserButton />
         </SignedIn>
 
-        {/* Hamburger toggle */}
         <button onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <X size={30} /> : <Menu size={30} />}
         </button>
@@ -76,6 +101,12 @@ export default function Navber() {
       {/* Mobile + Tablet Menu */}
       {menuOpen && (
         <div className="fixed top-0 left-0 w-full h-screen bg-black text-white flex flex-col justify-center items-center gap-10 z-40 text-2xl">
+          <li
+            onClick={() => setMenuOpen(false)}
+            className="cursor-pointer list-none"
+          >
+            <Link href="/">Home</Link>
+          </li>
           <li
             onClick={() => setMenuOpen(false)}
             className="cursor-pointer list-none"
@@ -111,8 +142,17 @@ export default function Navber() {
             </div>
           </SignedOut>
 
-          {/* Hide UserButton here because it's outside toggle menu now */}
-          {/* If you want to keep it here as well, you can, but usually it's better outside */}
+          <SignedIn>
+            <button
+              onClick={() => {
+                handleDashboardClick();
+                setMenuOpen(false);
+              }}
+              className="bg-blue-600 px-4 py-2 rounded"
+            >
+              Dashboard
+            </button>
+          </SignedIn>
         </div>
       )}
     </div>
