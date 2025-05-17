@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.19.4",
+    "@lottiefiles/dotlottie-react": "^0.13.5",
+    "@lottiefiles/react-lottie-player": "^3.6.0",
+    "gsap": "^3.13.0",
     "lucide-react": "^0.510.0",
     "next": "15.3.2",
     "react": "^19.0.0",

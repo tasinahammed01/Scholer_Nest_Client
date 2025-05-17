@@ -45,7 +45,7 @@ export default function Navber() {
   }
 
   return (
-    <div className="flex justify-between items-center md:px-10 py-10 relative">
+    <div className="flex justify-between items-center md:px-10 py-10 sticky top-0">
       {/* Logo */}
       <div className="lg:w-[15%] md:w-[35%] ">
         <Image
