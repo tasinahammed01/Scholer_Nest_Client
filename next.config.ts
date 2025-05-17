@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         hostname: "i.ibb.co",
         pathname: "/**", // Allow all paths
       },
+      {
+        protocol: "https",
+        hostname: "lottie.host",
+        pathname: "**",
+      },
     ],
   },
 };
