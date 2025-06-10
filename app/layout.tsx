@@ -1,17 +1,13 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Navber from "@/Components/Navber";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const hankenGrotesk = Hanken_Grotesk({
+  variable: "--font-hanken-grotesk",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"], 
 });
 
 export const metadata: Metadata = {
@@ -27,9 +23,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" data-theme="dark">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
+        <body className={`${hankenGrotesk.variable} antialiased`}>
           <Navber></Navber>
           {children}
         </body>
