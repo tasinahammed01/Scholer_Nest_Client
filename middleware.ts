@@ -7,6 +7,7 @@ const isPublicRoute = createRouteMatcher([
   "/ai-chat",
   "/sign-in(.*)",
   "/sign-up(.*)",
+  "/api/seed",
 ]);
 
 const isAdminRoute = createRouteMatcher(["/admin(.*)"]);

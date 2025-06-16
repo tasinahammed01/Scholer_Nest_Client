@@ -85,7 +85,7 @@ export default function HeroSection() {
               alt="rating"
               width={60}
               height={60}
-              className="w-20 h-5 md:w-50 md:h-10"
+              className="w-20 h-5 md:w-50 md:h-10 lg:w-20 lg:h-5"
             />
             <span className="font-bold text-lg md:text-xl">4.9</span>
             <span className="text-xs md:text-sm">(15,008)</span>
@@ -134,7 +134,7 @@ export default function HeroSection() {
         We featured in
       </div>
       <div className="overflow-hidden whitespace-nowrap w-full">
-        <div className="flex gap-20 md:gap-20 px-4" ref={marqueeRef}>
+        <div className="flex gap-20 md:gap-20 px-4 md:mt-10" ref={marqueeRef}>
           {[...marqueeImages, ...marqueeImages].map((src, i) => (
             <Image
               key={i}

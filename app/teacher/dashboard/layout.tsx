@@ -4,7 +4,7 @@ import { BookMarked, CircleUserRound, Menu } from "lucide-react";
 import Link from "next/link";
 import { ReactNode, useState } from "react";
 
-export default function AdminLayout({ children }: { children: ReactNode }) {
+export default function TeacherLayout({ children }: { children: ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -22,7 +22,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0`}
       >
-        <div className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 text-white">Admin Panel</div>
+        <div className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 text-white">Teacher Panel</div>
 
         <nav className="flex flex-col gap-3 sm:gap-5 text-white">
           <Link
@@ -32,7 +32,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             <CircleUserRound className="w-5 h-5 sm:w-6 sm:h-6" /> <span>Users</span>
           </Link>
           <Link
-            href="/admin/dashboard/courses"
+            href="/teacher/dashboard/courses"
             className="font-medium flex gap-2 sm:gap-3 items-center hover:bg-gray-600 py-2 sm:py-3 px-2 rounded text-sm sm:text-base"
           >
             <BookMarked className="w-5 h-5 sm:w-6 sm:h-6" /> <span>Courses</span>
@@ -50,7 +50,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           >
             <Menu className="w-6 h-6" />
           </button>
-          <div className="text-base sm:text-lg font-semibold">Admin Panel</div>
+          <div className="text-base sm:text-lg font-semibold">Teacher Panel</div>
         </div>
 
         <main className="flex-1 p-4 sm:p-6 overflow-auto text-white">{children}</main>
