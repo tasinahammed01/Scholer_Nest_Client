@@ -11,6 +11,8 @@
   "dependencies": {
     "@lottiefiles/dotlottie-react": "^0.13.5",
     "@lottiefiles/react-lottie-player": "^3.6.0",
+    "@types/bcryptjs": "^2.4.6",
+    "bcryptjs": "^3.0.2",
     "gsap": "^3.13.0",
     "lucide-react": "^0.510.0",
     "mongoose": "^8.15.2",
